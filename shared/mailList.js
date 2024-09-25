@@ -1,0 +1,1 @@
+export const mailList = ["g.avinash@iitg.ac.in" , "p.niraj@iitg.ac.in" , "m.geet@iitg.ac.in" ];
