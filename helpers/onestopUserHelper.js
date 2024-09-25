@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {onestopUserEndpoint} from '../shared/constants.js';
+import {onestopUserEndpoint} from '../shared/constant.js';
 import {RequestValidationError} from "../errors/requestValidationError.js";
 import {AccessTokenError} from "../errors/accessTokenError.js";
 import {UserBlockedError} from "../errors/userBlockedError.js";

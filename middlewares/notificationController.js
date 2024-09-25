@@ -1,9 +1,8 @@
-const firebase = require("firebase-admin");
-const userModel = require("../models/userModel");
-const userNotifTokenModel = require("../models/userNotifTokenModel");
-const { sendToAllFirebaseTopicName } = require("../helpers/constants");
-const { body, matchedData } = require("express-validator");
-
+import firebase from("firebase-admin");
+import userModel from "../models/userModel";
+import userNotifTokenModel from "../models/userNotifTkenModel";
+import { sendToAllFirebaseTopicName } from "../helpers/constants";
+import { body, matchedData } from "express-validator";
 // Notification controller for mess performance index
 exports.sendMessPerformanceNotif = async (req, res) => {
   try {

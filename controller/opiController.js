@@ -1,8 +1,8 @@
-const Response = require("../models/response");
+import {Response} from "../models/response.js";
 
 const createNew = async (req, res) => {
   const userCheck = Response.findById({ outlookEmail: req.body.outlookEmail });
-  const {name , outlookEmail , rollNo , gender , hostel , phoneNumber} = req.body;
+  const {name , outlookEmail , rollNo , gender , hostel , phoneNumber , subscribedMess} = req.user.body;
   if (userCheck.filledEarlier) {
     res.json("Already filled of this month!");
   }
@@ -19,6 +19,7 @@ const createNew = async (req, res) => {
     month: req.body.month,
     filledEarlier: true,
   });
+  res.send("Accepted");
 };
 export const opiController = { 
     createNew : createNew

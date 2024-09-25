@@ -1,6 +1,5 @@
-const { Schema, model } = require("mongoose");
-const { bool } = require("sharp");
-
+import { Schema, model } from "mongoose";
+import {allIITGHostels} from '../shared/constant.js'
 const responseSchema = new Schema(
   {
     name: {
@@ -29,6 +28,7 @@ const responseSchema = new Schema(
       max: [9999999999, "Invalid mobile number."],
     },
     opiRating: {
+      type : Number,
       min: [1, "Rate in Scale of 10."],
       min: [10, "Rate in Scale of 10."],
     },
@@ -53,5 +53,4 @@ const responseSchema = new Schema(
   { timestamps: true }
 );
 
-const Response = model("response", responseSchema);
-module.exports = Response;
+export const Response = model("response", responseSchema);

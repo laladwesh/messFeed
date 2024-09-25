@@ -1,8 +1,9 @@
 // const { CustomError } = require("./customError");
 import { CustomError } from "./customError.js";
 
-export const NotFoundError = class NotFoundError extends CustomError{
+
+export const AccessTokenError = class AccessTokenError extends CustomError{
     constructor(message){
-        super(message, 404, "Not Found Error");
+        super(message, 401, 'Token Invalid');
     }
 }

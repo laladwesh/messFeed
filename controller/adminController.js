@@ -105,13 +105,13 @@
 // export const adminController = {
 //   allOpi,
 // };
-
-const Response = require("../models/response");
-const nodemailer = require("nodemailer");
-const mongoose = require("mongoose");
-const XLSX = require("xlsx");
-const fs = require("fs");
-const path = require("path");
+import cron from "node-cron";
+import {Response} from "../models/response.js";
+import nodemailer from "nodemailer";
+import mongoose from "mongoose";
+import XLSX from "xlsx";
+import fs from "fs";
+import path from "path";
 
 // Configure your nodemailer to send emails
 const transporter = nodemailer.createTransport({
@@ -206,7 +206,7 @@ const archiveAndSendEmail = async () => {
 
 // Schedule a daily check to run the archive and send email function at midnight (server time)
 const scheduleDailyCheck = () => {
-  const cron = require("node-cron");
+
 
   // Run the check every day at midnight
   cron.schedule("0 0 * * *", async () => {
@@ -219,5 +219,7 @@ const scheduleDailyCheck = () => {
 scheduleDailyCheck();
 
 export const adminController = {
-  allOpi,
+  archiveAndSendEmail,
+  scheduleDailyCheck,
+  
 };
