@@ -5,7 +5,8 @@ import http from "http";
 import mongoose from "mongoose";
 import { opiController }from "./controller/opiController.js";
 import { verifyUserInfo } from "./middlewares/userInfo.js";
-import { scheduleDateProcessing, processDateList } from "./controller/adminController.js";
+import { adminController } from "./controller/adminController.js";
+const { scheduleDateProcessing , processDateList} = adminController;
 import {NotFoundError} from './errors/notFoundError.js'
 // mongoose.set("strictQuery", false);
 
