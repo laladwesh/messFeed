@@ -4,13 +4,17 @@ import nodemailer from "nodemailer";
 import XLSX from "xlsx";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
+  secure: false,
   auth: {
-    user: 'your-email@gmail.com', // replace with your email
-    pass: 'your-password', // replace with your password
-  },
+    user: process.env.EMAIL, // replace with your email
+    pass: process.env.PASS,  // replace with your password
+  }
 });
 
 const convertToExcel = (data, fileName) => {
@@ -24,23 +28,24 @@ const convertToExcel = (data, fileName) => {
 };
 
 const sendEmailForDate = async (date, recipients) => {
+  try{
   const startOfDay = new Date(date);
   startOfDay.setUTCHours(0, 0, 0, 0);
   const endOfDay = new Date(date);
   endOfDay.setUTCHours(23, 59, 59, 999);
   const data = await Response.find({
-    timestamp: {
+    createdAt: {
       $gte: startOfDay,
       $lte: endOfDay,
     },
   });
 
-  if (data.length > 0) {
+  if (data) {
     const fileName = `OPIdata_${date}.xlsx`;
     const filePath = convertToExcel(data, fileName);
 
     const mailOptions = {
-      from: 'your-email@gmail.com',
+      from: process.env.EMAIL,
       to: recipients,
       subject: `Data for ${date}`,
       text: `Please find attached the data for ${date}.`,
@@ -58,6 +63,10 @@ const sendEmailForDate = async (date, recipients) => {
   } else {
     console.log(`No data found for ${date}`);
   }
+}catch(e){
+  console.log(e);
+}
+  
 };
 
 const sendSummaryEmail = async (startDate, endDate, recipients) => {
@@ -67,7 +76,7 @@ const sendSummaryEmail = async (startDate, endDate, recipients) => {
   end.setUTCHours(23, 59, 59, 999);
 
   const data = await Response.find({
-    timestamp: {
+    createdAt: {
       $gte: start,
       $lte: end,
     },
@@ -78,7 +87,7 @@ const sendSummaryEmail = async (startDate, endDate, recipients) => {
     const filePath = convertToExcel(data, fileName);
 
     const mailOptions = {
-      from: 'your-email@gmail.com',
+      from: process.env.EMAIL,
       to: recipients,
       subject: `Summary Data from ${startDate} to ${endDate}`,
       text: `Please find attached the summary data for the range from ${startDate} to ${endDate}.`,
@@ -95,7 +104,7 @@ const sendSummaryEmail = async (startDate, endDate, recipients) => {
     fs.unlinkSync(filePath);
 
     await Response.deleteMany({
-      timestamp: {
+      createdAt: {
         $gte: start,
         $lte: end,
       },
@@ -121,15 +130,13 @@ const processDateList = async (dateList, recipients) => {
 
 const scheduleDateProcessing = () => {
   const dateList = ["2024-09-25", "2024-09-26", "2024-09-27"];
-  const recipients = ['email1@example.com', 'email2@example.com'];
-
-  cron.schedule("0 0 * * *", async () => {
+  const recipients = ['g.avinash@iitg.ac.in', 'p.niraj@iit.ac.in'];
+  cron.schedule("* * * * *", async () => {
     console.log("Running scheduled date processing...");
     await processDateList(dateList, recipients);
   });
 };
 
-scheduleDateProcessing();
 
 export const adminController = {
   processDateList,

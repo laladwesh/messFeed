@@ -1,5 +1,7 @@
 import { getOnestopUser } from "../helpers/onestopUserHelper.js";
 import { RequestValidationError } from "../errors/requestValidationError.js";
+import { guestUserEmail } from "../shared/constant.js";
+
 
 
 export const getUserInfo = async (req, res, next) => {

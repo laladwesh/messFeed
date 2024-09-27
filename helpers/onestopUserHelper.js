@@ -9,6 +9,7 @@ import {NotAuthorizedError} from "../errors/notAuthorizedError.js";
 export const getOnestopUser = async (authHeader, onestopSecurityKey) => {
     try {
         const res = await axios.get(onestopUserEndpoint, {
+            
             headers: {
                 "authorization": authHeader,
                 "security-key": onestopSecurityKey,
