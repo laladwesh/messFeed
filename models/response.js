@@ -14,10 +14,6 @@ const responseSchema = new Schema(
       type: String,
       required: true,
     },
-    gender: {
-      type: String,
-      enum: ["Male", "Female", "Others"],
-    },
     hostel: {
       type: String,
       enum: allIITGHostels,
@@ -27,10 +23,20 @@ const responseSchema = new Schema(
       min: [1000000000, "Invalid mobile number."],
       max: [9999999999, "Invalid mobile number."],
     },
-    opiRating: {
+    opiLunch: {
       type : Number,
       min: [1, "Rate in Scale of 10."],
-      min: [10, "Rate in Scale of 10."],
+      max: [10, "Rate in Scale of 10."],
+    },
+    opiBreakfast: {
+      type : Number,
+      min: [1, "Rate in Scale of 10."],
+      max: [10, "Rate in Scale of 10."],
+    },
+    opiDinner: {
+      type : Number,
+      min: [1, "Rate in Scale of 10."],
+      max: [10, "Rate in Scale of 10."],
     },
     opiComments: {
       type: String,
@@ -39,16 +45,7 @@ const responseSchema = new Schema(
     subscribedMess: {
       type: String,
       required: true,
-    },
-    month: {
-      type: String,
-      required: true,
-    },
-    filledEarlier : {
-      type : Boolean,
-      required : true,
-      default : false
-    },
+    }
   },
   { timestamps: true }
 );
